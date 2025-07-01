@@ -1,7 +1,12 @@
-coqui_tts/
+# Local ignores
 models/
+coqui_tts/
 AudioFiles/
+*.wav
 __pycache__/
 *.pyc
-*.wav
-.vscode/
+
+# Remote ignores
+venv/
+env/
+node_modules/
