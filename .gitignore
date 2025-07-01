@@ -1,0 +1,7 @@
+coqui_tts/
+models/
+AudioFiles/
+__pycache__/
+*.pyc
+*.wav
+.vscode/

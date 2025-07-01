@@ -1,0 +1,9 @@
+flask
+flask-cors
+TTS
+soundfile
+numpy
+scipy
+torch
+torchaudio
+librosa

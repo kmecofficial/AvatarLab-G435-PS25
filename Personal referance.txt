@@ -1,0 +1,487 @@
+(coqui_Tts) PS C:\Users\Karthik\OneDrive\Desktop\PS22(Part2)> pip show coqui-tts
+Name: coqui-tts
+Version: 0.26.2
+Summary: Deep learning for Text to Speech.
+Home-page: https://github.com/idiap/coqui-ai-TTS
+Author:
+Author-email: Eren Gölge <egolge@coqui.ai>
+License: MPL-2.0
+Location: C:\Users\Karthik\OneDrive\Desktop\PS22(Part2)\coqui_TTS\Lib\site-packages
+Requires: anyascii, coqpit-config, coqui-tts-trainer, cython, einops, encodec, fsspec, gruut, inflect, librosa, matplotlib, monotonic-alignment-search, num2words, numpy, packaging, pysbd, pyyaml, scipy, soundfile, torch, torchaudio, tqdm, transformers, typing-extensions
+Required-by:
+(coqui_Tts) PS C:\Users\Karthik\OneDrive\Desktop\PS22(Part2)>  tts --text "Hello, world!" --model_name "tts_models/en/ljspeech/tacotron2-DDC"
+Downloading model to C:\Users\Karthik\AppData\Local\tts\tts_models--en--ljspeech--tacotron2-DDC
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████▌| 112M/113M [00:28<00:00, 5.85MiB/s]Model's license - apache 2.0
+Check https://choosealicense.com/licenses/apache-2.0/ for more info.
+Downloading model to C:\Users\Karthik\AppData\Local\tts\vocoder_models--en--ljspeech--hifigan_v2
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 113M/113M [00:30<00:00, 3.68MiB/s]
+  0%|                                                                                                                    | 0.00/3.80M [00:00<?, ?iB/s]Model's license - apache 2.0█████████████████████████████████████████████████████████████████████▏               | 3.24M/3.80M [00:00<00:00, 6.78MiB/s]
+Check https://choosealicense.com/licenses/apache-2.0/ for more info.
+Using model: Tacotron2
+Setting up Audio Processor...
+ | sample_rate: 22050
+ | resample: False
+ | num_mels: 80
+ | log_func: np.log
+ | min_level_db: -100
+ | frame_shift_ms: None
+ | frame_length_ms: None
+ | ref_level_db: 20
+ | fft_size: 1024
+ | power: 1.5
+ | preemphasis: 0.0
+ | griffin_lim_iters: 60
+ | signal_norm: False
+ | symmetric_norm: True
+ | mel_fmin: 0
+ | mel_fmax: 8000.0
+ | pitch_fmin: 1.0
+ | pitch_fmax: 640.0
+ | spec_gain: 1.0
+ | stft_pad_mode: reflect
+ | max_norm: 4.0
+ | clip_norm: True
+ | do_trim_silence: True
+ | trim_db: 60
+ | do_sound_norm: False
+ | do_amp_to_db_linear: True
+ | do_amp_to_db_mel: True
+ | do_rms_norm: False
+ | db_level: None
+ | stats_path: None
+ | base: 2.718281828459045
+ | hop_length: 256
+ | win_length: 1024
+Model's reduction rate `r` is set to: 1
+Setting up Audio Processor...
+ | sample_rate: 22050
+ | resample: False
+ | num_mels: 80
+ | log_func: np.log
+ | min_level_db: -100
+ | frame_shift_ms: None
+ | frame_length_ms: None
+ | ref_level_db: 20
+ | fft_size: 1024
+ | power: 1.5
+ | preemphasis: 0.0
+ | griffin_lim_iters: 60
+ | signal_norm: False
+ | symmetric_norm: True
+ | mel_fmin: 0
+ | mel_fmax: 8000.0
+ | pitch_fmin: 1.0
+ | pitch_fmax: 640.0
+ | spec_gain: 1.0
+ | stft_pad_mode: reflect
+ | max_norm: 4.0
+ | clip_norm: True
+ | do_trim_silence: False
+ | trim_db: 60
+ | do_sound_norm: False
+ | do_amp_to_db_linear: True
+ | do_amp_to_db_mel: True
+ | do_rms_norm: False
+ | db_level: None
+ | stats_path: None
+ | base: 2.718281828459045
+ | hop_length: 256
+ | win_length: 1024
+Vocoder model: hifigan
+Setting up Audio Processor...
+ | sample_rate: 22050
+ | resample: False
+ | num_mels: 80
+ | log_func: np.log
+ | min_level_db: -100
+ | frame_shift_ms: None
+ | frame_length_ms: None
+ | ref_level_db: 20
+ | fft_size: 1024
+ | power: 1.5
+ | preemphasis: 0.0
+ | griffin_lim_iters: 60
+ | signal_norm: False
+ | symmetric_norm: True
+ | mel_fmin: 0
+ | mel_fmax: 8000.0
+ | pitch_fmin: 1.0
+ | pitch_fmax: 640.0
+ | spec_gain: 1.0
+ | stft_pad_mode: reflect
+ | max_norm: 4.0
+ | clip_norm: True
+ | do_trim_silence: False
+ | trim_db: 60
+ | do_sound_norm: False
+ | do_amp_to_db_linear: True
+ | do_amp_to_db_mel: True
+ | do_rms_norm: False
+ | db_level: None
+ | stats_path: None
+ | base: 2.718281828459045
+ | hop_length: 256
+ | win_length: 1024
+Generator model: hifigan_generator
+Discriminator model: hifigan_discriminator
+Removing weight norm...
+Text: Hello, world!
+Text split into sentences.
+Input: ['Hello, world!']
+Processing time: 2.682
+Real-time factor: 1.818
+Saved TTS output to tts_output.wav
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3.80M/3.80M [00:08<00:00, 459kiB/s]
+(coqui_Tts) PS C:\Users\Karthik\OneDrive\Desktop\PS22(Part2)>  tts --text "Hi this is coqui, an ai based model to generate audi through text, i use a transformer model" --model_name "tts_models/en/ljspeech/tacotron2-DDC"
+tts_models/en/ljspeech/tacotron2-DDC is already downloaded.
+vocoder_models/en/ljspeech/hifigan_v2 is already downloaded.
+Using model: Tacotron2
+Setting up Audio Processor...
+ | sample_rate: 22050
+ | resample: False
+ | num_mels: 80
+ | log_func: np.log
+ | min_level_db: -100
+ | frame_shift_ms: None
+ | frame_length_ms: None
+ | ref_level_db: 20
+ | fft_size: 1024
+ | power: 1.5
+ | preemphasis: 0.0
+ | griffin_lim_iters: 60
+ | signal_norm: False
+ | symmetric_norm: True
+ | mel_fmin: 0
+ | mel_fmax: 8000.0
+ | pitch_fmin: 1.0
+ | pitch_fmax: 640.0
+ | spec_gain: 1.0
+ | stft_pad_mode: reflect
+ | max_norm: 4.0
+ | clip_norm: True
+ | do_trim_silence: True
+ | trim_db: 60
+ | do_sound_norm: False
+ | do_amp_to_db_linear: True
+ | do_amp_to_db_mel: True
+ | do_rms_norm: False
+ | db_level: None
+ | stats_path: None
+ | base: 2.718281828459045
+ | hop_length: 256
+ | win_length: 1024
+Model's reduction rate `r` is set to: 1
+Setting up Audio Processor...
+ | sample_rate: 22050
+ | resample: False
+ | num_mels: 80
+ | log_func: np.log
+ | min_level_db: -100
+ | frame_shift_ms: None
+ | frame_length_ms: None
+ | ref_level_db: 20
+ | fft_size: 1024
+ | power: 1.5
+ | preemphasis: 0.0
+ | griffin_lim_iters: 60
+ | signal_norm: False
+ | symmetric_norm: True
+ | mel_fmin: 0
+ | mel_fmax: 8000.0
+ | pitch_fmin: 1.0
+ | pitch_fmax: 640.0
+ | spec_gain: 1.0
+ | stft_pad_mode: reflect
+ | max_norm: 4.0
+ | clip_norm: True
+ | do_trim_silence: False
+ | trim_db: 60
+ | do_sound_norm: False
+ | do_amp_to_db_linear: True
+ | do_amp_to_db_mel: True
+ | do_rms_norm: False
+ | db_level: None
+ | stats_path: None
+ | base: 2.718281828459045
+ | hop_length: 256
+ | win_length: 1024
+Vocoder model: hifigan
+Setting up Audio Processor...
+ | sample_rate: 22050
+ | resample: False
+ | num_mels: 80
+ | log_func: np.log
+ | min_level_db: -100
+ | frame_shift_ms: None
+ | frame_length_ms: None
+ | ref_level_db: 20
+ | fft_size: 1024
+ | power: 1.5
+ | preemphasis: 0.0
+ | griffin_lim_iters: 60
+ | signal_norm: False
+ | symmetric_norm: True
+ | mel_fmin: 0
+ | mel_fmax: 8000.0
+ | pitch_fmin: 1.0
+ | pitch_fmax: 640.0
+ | spec_gain: 1.0
+ | stft_pad_mode: reflect
+ | max_norm: 4.0
+ | clip_norm: True
+ | do_trim_silence: False
+ | trim_db: 60
+ | do_sound_norm: False
+ | do_amp_to_db_linear: True
+ | do_amp_to_db_mel: True
+ | do_rms_norm: False
+ | db_level: None
+ | stats_path: None
+ | base: 2.718281828459045
+ | hop_length: 256
+ | win_length: 1024
+Generator model: hifigan_generator
+Discriminator model: hifigan_discriminator
+Removing weight norm...
+Text: Hi this is coqui, an ai based model to generate audi through text, i use a transformer model
+Text split into sentences.
+Input: ['Hi this is coqui, an ai based model to generate audi through text, i use a transformer model']
+Processing time: 7.276
+Real-time factor: 0.982
+Saved TTS output to tts_output.wav
+(coqui_Tts) PS C:\Users\Karthik\OneDrive\Desktop\PS22(Part2)>  tts --text "In the grand scheme of things, humanity has always strived to explore, to innovate, and to understand the mysteries of existence. From the ancient philosophers who pondered the stars to modern scientists unraveling the complexities of quantum physics, our journey of discovery has been relentless. As we stand on the brink of a new era, where artificial intelligence and space exploration merge, it becomes evident that the possibilities are limitless. Imagine a future where autonomous vehicles navigate seamlessly through smart cities, where personalized medicine tailors treatments for each individual, and where interstellar travel becomes a reality. This is not science fiction but a vision of the world we are actively building. However, with great power comes great responsibility. The ethical challenges we face in wielding such technologies demand careful consideration, transparency, and collaboration. Together, we must ensure that progress serves all of humanity, leaving no one behind and preserving the planet for generations to come. As we listen to this message, let us reflect on the importance of unity, innovation, and hope in shaping a better tomorrow." --model_name "tts_models/en/ljspeech/tacotron2-DDC"  
+tts_models/en/ljspeech/tacotron2-DDC is already downloaded.
+vocoder_models/en/ljspeech/hifigan_v2 is already downloaded.
+Using model: Tacotron2
+Setting up Audio Processor...
+ | sample_rate: 22050
+ | resample: False
+ | num_mels: 80
+ | log_func: np.log
+ | min_level_db: -100
+ | frame_shift_ms: None
+ | frame_length_ms: None
+ | ref_level_db: 20
+ | fft_size: 1024
+ | power: 1.5
+ | preemphasis: 0.0
+ | griffin_lim_iters: 60
+ | signal_norm: False
+ | symmetric_norm: True
+ | mel_fmin: 0
+ | mel_fmax: 8000.0
+ | pitch_fmin: 1.0
+ | pitch_fmax: 640.0
+ | spec_gain: 1.0
+ | stft_pad_mode: reflect
+ | max_norm: 4.0
+ | clip_norm: True
+ | do_trim_silence: True
+ | trim_db: 60
+ | do_sound_norm: False
+ | do_amp_to_db_linear: True
+ | do_amp_to_db_mel: True
+ | do_rms_norm: False
+ | db_level: None
+ | stats_path: None
+ | base: 2.718281828459045
+ | hop_length: 256
+ | win_length: 1024
+Model's reduction rate `r` is set to: 1
+Setting up Audio Processor...
+ | sample_rate: 22050
+ | resample: False
+ | num_mels: 80
+ | log_func: np.log
+ | min_level_db: -100
+ | frame_shift_ms: None
+ | frame_length_ms: None
+ | ref_level_db: 20
+ | fft_size: 1024
+ | power: 1.5
+ | preemphasis: 0.0
+ | griffin_lim_iters: 60
+ | signal_norm: False
+ | symmetric_norm: True
+ | mel_fmin: 0
+ | mel_fmax: 8000.0
+ | pitch_fmin: 1.0
+ | pitch_fmax: 640.0
+ | spec_gain: 1.0
+ | stft_pad_mode: reflect
+ | max_norm: 4.0
+ | clip_norm: True
+ | do_trim_silence: False
+ | trim_db: 60
+ | do_sound_norm: False
+ | do_amp_to_db_linear: True
+ | do_amp_to_db_mel: True
+ | do_rms_norm: False
+ | db_level: None
+ | stats_path: None
+ | base: 2.718281828459045
+ | hop_length: 256
+ | win_length: 1024
+Vocoder model: hifigan
+Setting up Audio Processor...
+ | sample_rate: 22050
+ | resample: False
+ | num_mels: 80
+ | log_func: np.log
+ | min_level_db: -100
+ | frame_shift_ms: None
+ | frame_length_ms: None
+ | ref_level_db: 20
+ | fft_size: 1024
+ | power: 1.5
+ | preemphasis: 0.0
+ | griffin_lim_iters: 60
+ | signal_norm: False
+ | symmetric_norm: True
+ | mel_fmin: 0
+ | mel_fmax: 8000.0
+ | pitch_fmin: 1.0
+ | pitch_fmax: 640.0
+ | spec_gain: 1.0
+ | stft_pad_mode: reflect
+ | max_norm: 4.0
+ | clip_norm: True
+ | do_trim_silence: False
+ | trim_db: 60
+ | do_sound_norm: False
+ | do_amp_to_db_linear: True
+ | do_amp_to_db_mel: True
+ | do_rms_norm: False
+ | db_level: None
+ | stats_path: None
+ | base: 2.718281828459045
+ | hop_length: 256
+ | win_length: 1024
+Generator model: hifigan_generator
+Discriminator model: hifigan_discriminator
+Removing weight norm...
+Text: In the grand scheme of things, humanity has always strived to explore, to innovate, and to understand the mysteries of existence. From the ancient philosophers who pondered the stars to modern scientists unraveling the complexities of quantum physics, our journey of discovery has been relentless. As we stand on the brink of a new era, where artificial intelligence and space exploration merge, it becomes evident that the possibilities are limitless. Imagine a future where autonomous vehicles navigate seamlessly through smart cities, where personalized medicine tailors treatments for each individual, and where interstellar travel becomes a reality. This is not science fiction but a vision of the world we are actively building. However, with great power comes great responsibility. The ethical challenges we face in wielding such technologies demand careful consideration, transparency, and collaboration. Together, we must ensure that progress serves all of humanity, leaving no one behind and preserving the planet for generations to come. As we listen to this message, let us reflect on the importance of unity, innovation, and hope in shaping a better tomorrow.
+Text split into sentences.
+Input: ['In the grand scheme of things, humanity has always strived to explore, to innovate, and to understand the mysteries of existence.', 'From the ancient philosophers who pondered the stars to modern scientists unraveling the complexities of quantum physics, our journey of discovery has been relentless.', 'As we stand on the brink of a new era, where artificial intelligence and space exploration merge, it becomes evident that the possibilities are limitless.', 'Imagine a future where autonomous vehicles navigate seamlessly through smart cities, where personalized medicine tailors treatments for each individual, and where interstellar travel becomes a reality.', 'This is not science fiction but a vision of the world we are actively building.', 'However, with great power comes great responsibility.', 'The ethical challenges we face in wielding such technologies demand careful consideration, transparency, and collaboration.', 'Together, we must ensure that progress serves all of humanity, leaving no one behind and preserving the planet for generations to come.', 'As we listen to this message, let us reflect on the importance of unity, innovation, and hope in shaping a better tomorrow.'] 
+Processing time: 75.824
+Real-time factor: 0.931
+Saved TTS output to tts_output.wav
+(coqui_Tts) PS C:\Users\Karthik\OneDrive\Desktop\PS22(Part2)>  tts --text "How many times do I have to repeat myself? This is absolutely unacceptable! I’ve been patient, but this incompetence has crossed the line. Deadlines were set, and yet here we are, scrambling at the last minute because no one followed through. Do you think this is how things should be run? The lack of accountability is astonishing. I expect this to be fixed immediately, or there will be serious consequences. Enough is enough!" --model_name "tts_models/en/ljspeech/tacotron2-DDC"                                                
+tts_models/en/ljspeech/tacotron2-DDC is already downloaded.                                                                                            
+vocoder_models/en/ljspeech/hifigan_v2 is already downloaded.                                                                                           
+Using model: Tacotron2                                                                                                                                 
+Setting up Audio Processor...                                                                                                                          
+ | sample_rate: 22050                                                                         
+ | resample: False
+ | num_mels: 80
+ | log_func: np.log
+ | min_level_db: -100
+ | frame_shift_ms: None
+ | frame_length_ms: None
+ | ref_level_db: 20
+ | fft_size: 1024
+ | power: 1.5
+ | preemphasis: 0.0
+ | griffin_lim_iters: 60
+ | signal_norm: False
+ | symmetric_norm: True
+ | mel_fmin: 0
+ | mel_fmax: 8000.0
+ | pitch_fmin: 1.0
+ | pitch_fmax: 640.0
+ | spec_gain: 1.0
+ | stft_pad_mode: reflect
+ | max_norm: 4.0
+ | clip_norm: True
+ | do_trim_silence: True
+ | trim_db: 60
+ | do_sound_norm: False
+ | do_amp_to_db_linear: True
+ | do_amp_to_db_mel: True
+ | do_rms_norm: False
+ | db_level: None
+ | stats_path: None
+ | base: 2.718281828459045
+ | hop_length: 256
+ | win_length: 1024
+Model's reduction rate `r` is set to: 1
+Setting up Audio Processor...
+ | sample_rate: 22050
+ | resample: False
+ | num_mels: 80
+ | log_func: np.log
+ | min_level_db: -100
+ | frame_shift_ms: None
+ | frame_length_ms: None
+ | ref_level_db: 20
+ | fft_size: 1024
+ | power: 1.5
+ | preemphasis: 0.0
+ | griffin_lim_iters: 60
+ | signal_norm: False
+ | symmetric_norm: True
+ | mel_fmin: 0
+ | mel_fmax: 8000.0
+ | pitch_fmin: 1.0
+ | pitch_fmax: 640.0
+ | spec_gain: 1.0
+ | stft_pad_mode: reflect
+ | max_norm: 4.0
+ | clip_norm: True
+ | do_trim_silence: False
+ | trim_db: 60
+ | do_sound_norm: False
+ | do_amp_to_db_linear: True
+ | do_amp_to_db_mel: True
+ | do_rms_norm: False
+ | db_level: None
+ | stats_path: None
+ | base: 2.718281828459045
+ | hop_length: 256
+ | win_length: 1024
+Vocoder model: hifigan
+Setting up Audio Processor...
+ | sample_rate: 22050
+ | resample: False
+ | num_mels: 80
+ | log_func: np.log
+ | min_level_db: -100
+ | frame_shift_ms: None
+ | frame_length_ms: None
+ | ref_level_db: 20
+ | fft_size: 1024
+ | power: 1.5
+ | preemphasis: 0.0
+ | griffin_lim_iters: 60
+ | signal_norm: False
+ | symmetric_norm: True
+ | mel_fmin: 0
+ | mel_fmax: 8000.0
+ | pitch_fmin: 1.0
+ | pitch_fmax: 640.0
+ | spec_gain: 1.0
+ | stft_pad_mode: reflect
+ | max_norm: 4.0
+ | clip_norm: True
+ | do_trim_silence: False
+ | trim_db: 60
+ | do_sound_norm: False
+ | do_amp_to_db_linear: True
+ | do_amp_to_db_mel: True
+ | do_rms_norm: False
+ | db_level: None
+ | stats_path: None
+ | base: 2.718281828459045
+ | hop_length: 256
+ | win_length: 1024
+Generator model: hifigan_generator
+Discriminator model: hifigan_discriminator
+Removing weight norm...
+Text: How many times do I have to repeat myself? This is absolutely unacceptable! I’ve been patient, but this incompetence has crossed the line. Deadlines were set, and yet here we are, scrambling at the last minute because no one followed through. Do you think this is how things should be run? The lack of accountability is astonishing. I expect this to be fixed immediately, or there will be serious consequences. Enough is enough!
+Text split into sentences.
+Input: ['How many times do I have to repeat myself?', 'This is absolutely unacceptable!', 'I’ve been patient, but this incompetence has crossed the line.', 'Deadlines were set, and yet here we are, scrambling at the last minute because no one followed through.', 'Do you think this is how things should be run?', 'The lack of accountability is astonishing.', 'I expect this to be fixed immediately, or there will be serious consequences.', 'Enough is enough!']
+WARNING: i’ve been patient, but this incompetence has crossed the line.
+WARNING: Character '’' not found in the vocabulary. Discarding it.
+Processing time: 27.455
+Real-time factor: 0.847
+Saved TTS output to tts_output.wav
