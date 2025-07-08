@@ -221,3 +221,7 @@ For support, please open an issue in the repository or contact the development t
 ---
 
 **Happy Avatar Generating! 🎭✨** 
+=======
+# AvatarGenerator
+A place where you can bring images to life
+>>>>>>> 50b8089cdb1d0322654c31974792eb3b29f492b5
