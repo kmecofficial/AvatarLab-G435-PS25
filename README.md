@@ -168,3 +168,7 @@ For support, please open an issue in the repository or contact the development t
 A modern web application that generates talking avatar videos using AI voice synthesis and lip-sync technology.
 ... (previous content omitted for brevity) ...
 -->
+=======
+# AvatarLab-G435-PS25
+Repo for AvatarLab PS project
+>>>>>>> 585b95e7bae5b359b483c08909b5b5897a757a97
