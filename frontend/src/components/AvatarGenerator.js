@@ -306,14 +306,14 @@ const AvatarGenerator = () => {
     formData.append('gender', gender);
 
     try {
-      const response = await axios.post('http://localhost:5000/generate', formData, {
+      const response = await axios.post('http://localhost:5001/generate', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
 
       if (response.data.audio_url) {
-        const audioUrl = `http://localhost:5000${response.data.audio_url}`;
+        const audioUrl = `http://localhost:5001${response.data.audio_url}`;
         setAudioUrl(audioUrl);
         toast.success('Audio generated successfully!');
       } else {

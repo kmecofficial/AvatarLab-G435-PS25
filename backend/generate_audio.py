@@ -18,8 +18,14 @@ if not os.path.exists(output_dir):
 app = Flask(__name__)
 CORS(app)
 
-# Load TTS model
-tts = TTS(model_path=model_path, config_path=config_path)
+# Load TTS model - handle missing model gracefully
+try:
+    tts = TTS(model_path=model_path, config_path=config_path)
+    print(f"[INFO] TTS model loaded from: {model_path}")
+except Exception as e:
+    print(f"[WARNING] Could not load TTS model from {model_path}: {e}")
+    print("[INFO] Will use default TTS model")
+    tts = TTS()
 
 def generate_audio_file(text, gender, output_path):
     """

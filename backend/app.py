@@ -10,6 +10,7 @@ from functools import wraps
 from dotenv import load_dotenv
 import subprocess
 from generate_audio import generate_audio_file
+from dreamtalk_integration import generate_talking_avatar
 
 # Load environment variables
 load_dotenv()
@@ -159,47 +160,24 @@ def generate_avatar(current_user):
         # Generate audio
         generate_audio_file(text, gender, audio_path)
         
-        # Run DreamTalk (placeholder - you'll need to implement this)
-        # For now, we'll create a dummy video or use your existing DreamTalk setup
+        # Run DreamTalk integration
         try:
-            # Placeholder for DreamTalk integration
-            # You can uncomment and modify this when DreamTalk is ready
-            """
-            style_clip_path = os.path.join(dreamtalk_dir, "data/style_clip/3DMM/W009_front_sad_level3_001.mat")
-            pose_path = os.path.join(dreamtalk_dir, "data/pose/RichardShelby_front_neutral_level1_001.mat")
+            print(f"[INFO] Starting DreamTalk processing...")
+            print(f"[INFO] Image: {image_path}")
+            print(f"[INFO] Audio: {audio_path}")
+            print(f"[INFO] Output: {video_path}")
             
-            original_dir = os.getcwd()
-            os.chdir(dreamtalk_dir)
+            # Generate talking avatar using DreamTalk
+            success = generate_talking_avatar(image_path, audio_path, video_path)
             
-            subprocess.run([
-                "python", "inference_for_demo_video.py",
-                "--wav_path", audio_path,
-                "--style_clip_path", style_clip_path,
-                "--pose_path", pose_path,
-                "--image_path", image_path,
-                "--cfg_scale", "1.0",
-                "--max_gen_len", "40",
-                "--output_name", output_name
-            ], check=True)
+            if not success:
+                raise Exception("DreamTalk processing failed")
             
-            dreamtalk_output = os.path.join(dreamtalk_dir, "output_video", f"{output_name}.mp4")
-            if os.path.exists(dreamtalk_output):
-                import shutil
-                shutil.move(dreamtalk_output, video_path)
-            else:
-                raise FileNotFoundError(f"DreamTalk output not found")
-                
-            os.chdir(original_dir)
-            """
-            
-            # For now, create a dummy video or copy existing one
-            # This is where you'd integrate your actual DreamTalk setup
-            pass
+            print(f"[SUCCESS] DreamTalk video generated: {video_path}")
             
         except Exception as e:
-            print(f"DreamTalk error: {e}")
-            # For demo purposes, you might want to return a sample video
-            return jsonify({'message': 'Video generation failed'}), 500
+            print(f"[ERROR] DreamTalk error: {e}")
+            return jsonify({'message': f'DreamTalk processing failed: {str(e)}'}), 500
         
         # Save generation record to MongoDB
         generation_record = {
