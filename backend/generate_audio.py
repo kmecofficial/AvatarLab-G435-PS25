@@ -5,6 +5,11 @@ import soundfile as sf
 import os
 from flask_cors import CORS
 
+# Google Drive paths - use relative paths for cross-platform compatibility
+GOOGLE_DRIVE_BASE = r"G:\My Drive"
+GOOGLE_DRIVE_AUDIO_DIR = os.path.join(GOOGLE_DRIVE_BASE, "dreamtalk_main", "data", "audio")
+os.makedirs(GOOGLE_DRIVE_AUDIO_DIR, exist_ok=True)
+
 # Use relative paths for portability
 model_path = os.path.join("models", "XTTS-v2")
 config_path = os.path.join("models", "XTTS-v2", "config.json")
@@ -61,6 +66,8 @@ def generate_audio_file(text, gender, output_path):
 
 @app.route("/generate", methods=["POST"])
 def generate_audio():
+    
+    
     try:
         text = request.form.get("text")
         gender = request.form.get("gender", "male")
@@ -68,14 +75,17 @@ def generate_audio():
         if not text:
             return jsonify({"error": "No text provided"}), 400
         
-        # Generate audio file
-        file_name = "output_audio.wav"
-        full_path = os.path.join(output_dir, file_name)
         
+        # Generate audio file
+        import uuid
+        job_id = str(uuid.uuid4())
+        audio_filename = f"{job_id}.wav"
+        full_path = os.path.join(GOOGLE_DRIVE_AUDIO_DIR, audio_filename)
         generate_audio_file(text, gender, full_path)
         
+        
         print(f"[SUCCESS] Audio saved at: {full_path}")
-        return jsonify({"audio_url": f"/audio/{file_name}"}), 200
+        return jsonify({"audio_url": f"/audio/{audio_filename}","job_id":job_id}), 200
         
     except Exception as e:
         print(f"[ERROR] Failed to generate audio: {e}")
@@ -85,7 +95,7 @@ def generate_audio():
 
 @app.route("/audio/<filename>")
 def serve_audio(filename):
-    return send_from_directory(output_dir, filename)
+    return send_from_directory(GOOGLE_DRIVE_AUDIO_DIR, filename)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000) 

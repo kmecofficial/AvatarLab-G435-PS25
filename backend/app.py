@@ -10,7 +10,15 @@ from functools import wraps
 from dotenv import load_dotenv
 import subprocess
 from generate_audio import generate_audio_file
-from dreamtalk_integration import generate_talking_avatar
+# Google Drive paths - use relative paths for cross-platform compatibility
+GOOGLE_DRIVE_BASE = r"G:\My Drive"
+GOOGLE_DRIVE_IMAGE_DIR = os.path.join(GOOGLE_DRIVE_BASE, "dreamtalk_main", "data", "src_img", "uncropped")
+GOOGLE_DRIVE_AUDIO_DIR = os.path.join(GOOGLE_DRIVE_BASE, "dreamtalk_main", "data", "audio")
+GOOGLE_DRIVE_VIDEO_DIR = os.path.join(GOOGLE_DRIVE_BASE, "dreamtalk_main", "output_video")
+
+# Create directories
+for directory in [GOOGLE_DRIVE_IMAGE_DIR, GOOGLE_DRIVE_AUDIO_DIR, GOOGLE_DRIVE_VIDEO_DIR]:
+    os.makedirs(directory, exist_ok=True)
 
 # Load environment variables
 load_dotenv()
@@ -149,35 +157,24 @@ def generate_avatar(current_user):
         
         # Generate unique filenames
         uid = str(uuid.uuid4())
-        image_path = os.path.join(video_dir, f"{uid}_input.jpg")
-        audio_path = os.path.join(audio_dir, f"{uid}_output.wav")
+        image_path = os.path.join(GOOGLE_DRIVE_IMAGE_DIR, f"{uid}.jpg")
+        audio_path = os.path.join(GOOGLE_DRIVE_AUDIO_DIR, f"{uid}.wav")
         output_name = f"avatar_{uid}"
         video_path = os.path.join(video_dir, f"{uid}_output.mp4")
         
         # Save image
         image.save(image_path)
+        print(f"Saving image to: {image_path}")
         
         # Generate audio
         generate_audio_file(text, gender, audio_path)
         
-        # Run DreamTalk integration
-        try:
-            print(f"[INFO] Starting DreamTalk processing...")
-            print(f"[INFO] Image: {image_path}")
-            print(f"[INFO] Audio: {audio_path}")
-            print(f"[INFO] Output: {video_path}")
-            
-            # Generate talking avatar using DreamTalk
-            success = generate_talking_avatar(image_path, audio_path, video_path)
-            
-            if not success:
-                raise Exception("DreamTalk processing failed")
-            
-            print(f"[SUCCESS] DreamTalk video generated: {video_path}")
-            
-        except Exception as e:
-            print(f"[ERROR] DreamTalk error: {e}")
-            return jsonify({'message': f'DreamTalk processing failed: {str(e)}'}), 500
+        # Files are now in Google Drive, Colab will process them
+        print(f"[INFO] Files saved to Google Drive:")
+        print(f"[INFO] Image: {image_path}")
+        print(f"[INFO] Audio: {audio_path}")
+        print(f"[INFO] Job ID: {uid}")
+        print(f"[INFO] Colab will process this job automatically")
         
         # Save generation record to MongoDB
         generation_record = {
@@ -189,16 +186,17 @@ def generate_avatar(current_user):
             'audio_file': f"{uid}_output.wav",
             'video_file': f"{uid}_output.mp4",
             'created_at': datetime.datetime.utcnow(),
-            'status': 'completed'
+            'status': 'processing'  # Changed from 'completed' to 'processing'
         }
         
         generations_collection.insert_one(generation_record)
         
-        # Return video file
-        if os.path.exists(video_path):
-            return send_file(video_path, mimetype='video/mp4')
-        else:
-            return jsonify({'message': 'Video file not found'}), 500
+        # Return job ID for frontend to poll
+        return jsonify({
+            'message': 'Job submitted successfully',
+            'job_id': uid,
+            'status': 'processing'
+        }), 202
         
     except Exception as e:
         print(f"Error in generate_avatar: {e}")
@@ -243,6 +241,86 @@ def get_dashboard(current_user):
             'total_generations': total_generations,
             'recent_generations': recent_generations
         }), 200
+        
+    except Exception as e:
+        return jsonify({'message': str(e)}), 500
+
+# Job status and video serving endpoints
+@app.route('/api/job/<job_id>/status', methods=['GET'])
+@token_required
+def get_job_status(current_user, job_id):
+    try:
+        # Check if video exists in Google Drive output directory
+        output_video_path = os.path.join(GOOGLE_DRIVE_VIDEO_DIR, f"{job_id}.mp4")
+        
+        if os.path.exists(output_video_path):
+            return jsonify({
+                'status': 'completed',
+                'video_path': output_video_path
+            }), 200
+        else:
+            return jsonify({
+                'status': 'processing'
+            }), 200
+            
+    except Exception as e:
+        return jsonify({'message': str(e)}), 500
+
+@app.route('/api/video/<job_id>', methods=['GET'])
+@token_required
+def serve_video(current_user, job_id):
+    try:
+        # Video path in Google Drive
+        video_path = os.path.join(GOOGLE_DRIVE_VIDEO_DIR, f"{job_id}.mp4")
+        
+        if os.path.exists(video_path):
+            return send_file(video_path, mimetype='video/mp4')
+        else:
+            return jsonify({'message': 'Video not found'}), 404
+            
+    except Exception as e:
+        return jsonify({'message': str(e)}), 500
+
+# Add missing endpoints for frontend
+@app.route('/api/download/<job_id>', methods=['GET'])
+@token_required
+def download_video(current_user, job_id):
+    try:
+        video_path = os.path.join(GOOGLE_DRIVE_VIDEO_DIR, f"{job_id}.mp4")
+        
+        if os.path.exists(video_path):
+            return send_file(video_path, mimetype='video/mp4', as_attachment=True, download_name=f"avatar_{job_id}.mp4")
+        else:
+            return jsonify({'message': 'Video not found'}), 404
+            
+    except Exception as e:
+        return jsonify({'message': str(e)}), 500
+
+@app.route('/api/stream/<job_id>', methods=['GET'])
+@token_required
+def stream_video(current_user, job_id):
+    try:
+        video_path = os.path.join(GOOGLE_DRIVE_VIDEO_DIR, f"{job_id}.mp4")
+        
+        if os.path.exists(video_path):
+            return send_file(video_path, mimetype='video/mp4')
+        else:
+            return jsonify({'message': 'Video not found'}), 404
+            
+    except Exception as e:
+        return jsonify({'message': str(e)}), 500
+
+# Update job status when Colab completes processing
+@app.route('/api/job/<job_id>/complete', methods=['POST'])
+def complete_job(job_id):
+    try:
+        # Update the generation record status to completed
+        generations_collection.update_one(
+            {'_id': job_id},
+            {'$set': {'status': 'completed'}}
+        )
+        
+        return jsonify({'message': 'Job status updated to completed'}), 200
         
     except Exception as e:
         return jsonify({'message': str(e)}), 500
