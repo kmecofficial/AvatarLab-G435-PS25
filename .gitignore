@@ -1,3 +1,14 @@
+# In new-avatar-project/.gitignore
+
+# Frontend dependencies
+frontend/node_modules/
+
+# Python cache
+backend/__pycache__/
+
+# Model files (large, not needed in git)
+backend/models/
+=======
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -172,3 +183,4 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+>>>>>>> 585b95e7bae5b359b483c08909b5b5897a757a97
